@@ -1,7 +1,6 @@
 {
     "title": "Cyberpunk Red: Armor Ablates Easier",
     "description": "Implements the 'Armor Ablates Easier' house rule from the Ticket to the Afterlife campaign.",
-
     "version": "0.1.0",
     "authors": [
       {
@@ -10,13 +9,13 @@
         "discord": "tummai#2442"
       }
     ],
-    "id": "cpred-armor-ablates-easier",
+    "id": "cyberpunkred-armor-ablates-easier",
     "esmodules": ["scripts/main.js"],
     "languages": [
       {
         "lang": "en",
         "name": "English",
-        "path": "languages/en.json"
+        "path": "language/en.json"
       }
     ],
     "relationships": {
@@ -42,6 +41,6 @@
       "verified": "11",
       "maximum": "11"
     }
-  }
+}
 
 

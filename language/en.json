@@ -1,6 +1,14 @@
 {
-    "cyberpunkred-armor-ablates-easier.settings.house-rule-enable.name": "Armor Ablates Easier house rule",
-    "cyberpunkred-armor-ablates-easier.settings.house-rule-enable.hint": "Enable or disable the Armor Ablates Easier house rule. Any time a hit is scored against an opponent, even if that attack doesn't pierce the armor, the armor still ablates by 1.",
-    "cyberpunkred-armor-ablates-easier.settings.armor-sp-ignore-threshold.name": "Armor SP ignore threshold",
-    "cyberpunkred-armor-ablates-easier.settings.armor-sp-ignore-threshold.hint": "The SP value for which armor ignores this effect. For example: if this is set to 13, armor with remaining SP of 13 or higher will not be ablated under this rule."
+    "cyberpunkred-armor-ablates-easier": {
+        "settings": {
+            "house-rule-enable": {
+                "name": "Armor Ablates Easier house rule",
+                "hint": "Enable or disable the Armor Ablates Easier house rule. Any time a hit is scored against an opponent, even if that attack doesn't pierce the armor, the armor still ablates by 1."
+            },
+            "armor-sp-ignore-threshold": {
+                "name": "Armor SP ignore threshold",
+                "hint": "The SP value for which armor ignores this effect. For example: if this is set to 13, armor with remaining SP of 13 or higher will not be ablated under this rule."
+            }
+        }
+    }
 }

@@ -35,7 +35,7 @@ Hooks.on("createChatMessage", async function(message) {
 
     if (isDamageRoll) {
         //get the ablation value of the attack/ammo and store for future use.
-        const data = div.querySelector("[data-action=applyDamage]")?.CDATA_SECTION_NODE;
+        const data = div.querySelector("[data-action=applyDamage]")?.dataset;
         if (!data) return;
         if (!data.ablation) return;
         const actorId = message.speaker?.actor;
@@ -43,14 +43,14 @@ Hooks.on("createChatMessage", async function(message) {
         ablationCache[actorId] = data.ablation;
         ablationCache["last_attacker"] = actorId;
         const actorName = game.actors.get(actorId).name;
-        console.log("cyberpunkred-armor-ablates-easier :: " + actorName + " (" + actorId + ") ablation value of " + ablation + "cached.")
+        console.log("cyberpunkred-armor-ablates-easier :: " + actorName + " (" + actorId + ") ablation value of " + data.ablation + " cached.")
 
     } else if (isDamageResult) {
         //check for 0 damage dealt and configured SP threshhold. 
         //If so, ablate armor by our stored ablation value (if house rule is enabled)
     }
 
-    console.log(message);
+    //console.log(message);
 })
 
 console.log("cyberpunkred-armor-ablates-easier start");

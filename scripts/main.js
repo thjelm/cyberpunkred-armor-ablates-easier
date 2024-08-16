@@ -48,6 +48,11 @@ Hooks.on("createChatMessage", async function(message) {
     } else if (isDamageResult) {
         //check for 0 damage dealt and configured SP threshhold. 
         //If so, ablate armor by our stored ablation value (if house rule is enabled)
+        const data = div.querySelector("[data-action=reverseDamage]")?.dataset;
+        if (!data) return;
+        const targetId = data.actorId;
+        if (!targetId) return;
+        const text = div.querySelector('.d6-data-details > div:first-child').text().trim();
     }
 
     //console.log(message);

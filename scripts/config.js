@@ -1,8 +1,10 @@
+import { Constants } from "./constants.js";
+
 export class Config {
     static registerSettings() {
         console.log("cyberpunkred-armor-ablates-easier settings start");
 
-        game.settings.register("cyberpunkred-armor-ablates-easier", "house-rule-enable", {
+        game.settings.register("Constants.MODULE_NAME", "house-rule-enable", {
             name: game.i18n.localize("cyberpunkred-armor-ablates-easier.settings.house-rule-enable.name"),
             hint: game.i18n.localize("cyberpunkred-armor-ablates-easier.settings.house-rule-enable.hint"),
             scope: "world",
@@ -11,7 +13,7 @@ export class Config {
             default: false,
         });
 
-        game.settings.register("cyberpunkred-armor-ablates-easier", "armor-sp-ignore-threshold", {
+        game.settings.register("Constants.MODULE_NAME", "armor-sp-ignore-threshold", {
             name: game.i18n.localize("cyberpunkred-armor-ablates-easier.settings.armor-sp-ignore-threshold.name"),
             hint: game.i18n.localize("cyberpunkred-armor-ablates-easier.settings.armor-sp-ignore-threshold.hint"),
             scope: "world",

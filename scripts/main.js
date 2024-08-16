@@ -27,7 +27,7 @@ Hooks.on("createChatMessage", async function(message) {
     //chat message that appears after user clicks a lightning bolt to apply damage
     const isDamageResult = div.querySelector(
         `[data-tooltip='${game.i18n.localize(
-          "CPR.chat.damageApplication.damageDealtTo"
+          "CPR.chat.damageApplication.reverseDamage"
         )}']`
     );
 
@@ -52,7 +52,10 @@ Hooks.on("createChatMessage", async function(message) {
         if (!data) return;
         const targetId = data.actorId;
         if (!targetId) return;
-        const text = div.querySelector('.d6-data-details > div:first-child').text().trim();
+        const text = div.querySelector('.d6-data-details > div:first-child').innerHTML.trim();
+        if (text == `${game.i18n.localize("CPR.chat.damageApplication.damageDidNotPenetrate")}`) {
+            console.log("Woohoo! 0 damage");
+        }
     }
 
     //console.log(message);

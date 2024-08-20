@@ -41,7 +41,7 @@ Hooks.on("createChatMessage", async function(message) {
         const actorId = message.speaker?.actor;
         if (!actorId) return;
         ablationCache[actorId] = data.ablation;
-        ablationCache["last_attacker"] = actorId;
+        ablationCache.last_attacker = actorId;
         const actorName = game.actors.get(actorId).name;
         console.log("cyberpunkred-armor-ablates-easier :: " + actorName + " (" + actorId + ") ablation value of " + data.ablation + " cached.")
 
@@ -55,6 +55,49 @@ Hooks.on("createChatMessage", async function(message) {
         const text = div.querySelector('.d6-data-details > div:first-child').innerHTML.trim();
         if (text == `${game.i18n.localize("CPR.chat.damageApplication.damageDidNotPenetrate")}`) {
             console.log("Woohoo! 0 damage");
+            const location = data.location;
+            
+            //ignore brain and shield targets.
+            if (location != 'head' && location != 'body') return;
+            //don't ablate armor if a shield soaks the damage (still possible if attack location is body or head).
+            if (!!data.shieldAblation && parseInt(data.shieldAblation) > 0) return;
+
+            const targetId = data.actorId;
+            if (!location || !targetId) return;
+            const target = game.actors.get(targetId);
+            if (!target) return;
+
+            //check that armor SP isn't at or above threshold.
+            const armors = target.getEquippedArmors(location);
+            // Determine the highest value of all the equipped armors in the specific location
+            let currentArmorSp = 0;
+            armors.forEach((a) => {
+                let newValue;
+                if (location === "head") {
+                    newValue = a.system.headLocation.sp - a.system.headLocation.ablation;
+                } else {
+                    newValue = a.system.bodyLocation.sp - a.system.bodyLocation.ablation;
+                }
+                if (newValue > currentArmorSp) {
+                    currentArmorSp = newValue;
+                }
+            });
+            
+            const spThreshold = game.settings.get(Constants.MODULE_NAME, "armor-sp-ignore-threshold");
+            if (!spThreshold) return;
+            
+            if (currentArmorSp >= spThreshold) {
+                console.log("cyberpunkred-armor-ablates-easier :: 0 damage dealt to " + target.name + ", but armor is not ablated because current armor SP is " + currentArmorSp + " which is greater than or equal to the configured SP threshold of " + spThreshold);
+                return;
+            }
+
+            const lastAttackerId = ablationCache.last_attacker;
+            const lastAttacker = game.actors.get(lastAttackerId);
+            const lastAttackerAblation = ablationCache[lastAttackerId];
+            //if we are here, it's time for the house rule to ablate the armor.
+            //Warning: calling an underscore-prefixed function. This could break in future. 
+            await target._ablateArmor(location, lastAttackerAblation);
+            console.log("cyberpunkred-armor-ablates-easier :: " + lastAttacker.name + " dealt 0 damage to " + target.name + ", but ablated armor by " + lastAttackerAblation);
         }
     }
 

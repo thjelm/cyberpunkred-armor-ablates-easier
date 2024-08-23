@@ -28,13 +28,6 @@
           }
         }
       ],
-      "requires": [
-        {
-          "id": "lib-wrapper",
-          "type": "module",
-          "compatibility": {}
-        }
-      ]
     },
     "compatibility": {
       "minimum": "11",

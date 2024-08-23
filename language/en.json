@@ -9,6 +9,9 @@
                 "name": "Armor SP ignore threshold",
                 "hint": "The SP value for which armor ignores this effect. For example: if this is set to 13, armor with remaining SP of 13 or higher will not be ablated under this rule."
             }
+        },
+        "message": {
+            "ablate": "<b>Armor Ablates Easier</b> 0 damage dealt, but {attacker} ablates {target}'s armor by {ablation} SP"
         }
     }
 }

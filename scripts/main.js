@@ -13,7 +13,7 @@ Hooks.once("init", function () {
 
 Hooks.on("createChatMessage", async function(message) {
     if (!game.settings.get(Constants.MODULE_NAME, "house-rule-enable")) return;
-    if (game.userId != message._source.user) return;
+    //if (game.userId != message._source.user) return;
     const div = document.createElement("div");
     div.innerHTML = message.content;
 
@@ -34,6 +34,7 @@ Hooks.on("createChatMessage", async function(message) {
     if (!isDamageRoll && !isDamageResult) return;
 
     if (isDamageRoll) {
+        //we need all clients to store data in their ablation cache, so no user check.
         //get the ablation value of the attack/ammo and store for future use.
         const data = div.querySelector("[data-action=applyDamage]")?.dataset;
         if (!data) return;
@@ -46,6 +47,8 @@ Hooks.on("createChatMessage", async function(message) {
         console.log("cyberpunkred-armor-ablates-easier :: " + actorName + " (" + actorId + ") ablation value of " + data.ablation + " cached.")
 
     } else if (isDamageResult) {
+        //since we are potentially creating a message in the chat, we only want to run one the client that hit the button.
+        if (game.userId != message._source.user) return;
         //check for 0 damage dealt and configured SP threshhold. 
         //If so, ablate armor by our stored ablation value (if house rule is enabled)
         const data = div.querySelector("[data-action=reverseDamage]")?.dataset;
@@ -97,6 +100,20 @@ Hooks.on("createChatMessage", async function(message) {
             //if we are here, it's time for the house rule to ablate the armor.
             //Warning: calling an underscore-prefixed function. This could break in future. 
             await target._ablateArmor(location, lastAttackerAblation);
+            let backgroundColor = "var(--cpr-text-chat-success, #2d9f36)";
+            let chatMessage = game.i18n.format(
+                "cyberpunkred-armor-ablates-easier.message.ablate",
+                {attacker: lastAttacker.name, target: target.name, ablation: lastAttackerAblation}
+              );
+            ChatMessage.create(
+                {
+                    speaker: message.speaker,
+                    content: `<div class="cpr-block" style="padding:10px;background-color:${backgroundColor}">${chatMessage}</div>`,
+                    type: message.type,
+                    whisper: message.whisper,
+                },
+                { chatBubble: false }
+            );
             console.log("cyberpunkred-armor-ablates-easier :: " + lastAttacker.name + " dealt 0 damage to " + target.name + ", but ablated armor by " + lastAttackerAblation);
         }
     }

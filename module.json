@@ -1,7 +1,7 @@
 {
     "title": "Cyberpunk Red: Armor Ablates Easier",
     "description": "Implements the 'Armor Ablates Easier' house rule from the Ticket to the Afterlife campaign.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "authors": [
       {
         "name": "thjelm",

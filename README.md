@@ -21,3 +21,10 @@ This module implements the following house rule:
 The house rule is disabled by default, so the gamemaster will be required to turn it on in the module settings. Once enabled, anytime 0 damage is dealt to a player/mook and the defender's armor SP rating is below the configured threshold (default 13), armor is automatically ablated. It outputs a chat message.
 
 ![Armor Ablates Easier chat message](images/chat_message.png)
+
+## Acknowledgements
+Thanks to TheInvaderZim for the house rule.
+
+Thanks to diwako, the author of [Diwako's Cyberpunk Red - Core Additions](https://github.com/diwako/foundry-cyberpunk-red-core-additions) mod. Studying your source code helped me a lot to understand how to create a foundry cyberpunk red mod.
+
+Thanks to my awesome GM Katie, to our Highly Professional team of edgerunners, and to Howie Wacker (sorry about the dice).

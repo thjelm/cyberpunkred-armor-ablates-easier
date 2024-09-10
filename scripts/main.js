@@ -41,7 +41,7 @@ Hooks.on("createChatMessage", async function(message) {
         if (!data.ablation) return;
         const actorId = message.speaker?.actor;
         if (!actorId) return;
-        ablationCache[actorId] = data.ablation;
+        ablationCache[actorId] = parseInt(data.ablation);
         ablationCache.last_attacker = actorId;
         const actorName = game.actors.get(actorId).name;
         console.log("cyberpunkred-armor-ablates-easier :: " + actorName + " (" + actorId + ") ablation value of " + data.ablation + " cached.")
@@ -96,7 +96,8 @@ Hooks.on("createChatMessage", async function(message) {
 
             const lastAttackerId = ablationCache.last_attacker;
             const lastAttacker = game.actors.get(lastAttackerId);
-            const lastAttackerAblation = ablationCache[lastAttackerId];
+            //important to cast this to an int, or else a string concatination can occur in _ablateArmor(): in js, 1 + "1" is "11"
+            const lastAttackerAblation = parseInt(ablationCache[lastAttackerId]);
             //if we are here, it's time for the house rule to ablate the armor.
             //Warning: calling an underscore-prefixed function. This could break in future. 
             await target._ablateArmor(location, lastAttackerAblation);
